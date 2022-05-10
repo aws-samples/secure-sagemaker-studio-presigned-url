@@ -121,6 +121,13 @@ Resources:
                 Condition:
                   IpAddress:
                     'aws:SourceIp': !Ref OnPremCIDR
+              - Effect: Allow
+                Action: 'sagemaker:CreatePresignedDomainUrl'
+                Resource: !Sub >-
+                  arn:${AWS::Partition}:sagemaker:${AWS::Region}:${AWS::AccountId}:user-profile/*/*
+                Condition:
+                  StringEquals:
+                    'aws:sourceVpce': !Ref VpcEndpoints
         - PolicyName: vpcpolicy
           PolicyDocument:
             Version: 2012-10-17

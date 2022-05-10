@@ -194,6 +194,20 @@
                         }
                       }
                     }
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": "sagemaker:CreatePresignedDomainUrl",
+                    "Resource": {
+                      "Fn::Sub": "arn:${AWS::Partition}:sagemaker:${AWS::Region}:${AWS::AccountId}:user-profile/*/*"
+                    },
+                    "Condition": {
+                      "StringEquals": {
+                        "aws:sourceVpce": {
+                          "Ref": "VpcEndpoints"
+                        }
+                      }
+                    }
                   }
                 ]
               }
