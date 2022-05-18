@@ -23,9 +23,9 @@ After you have deployed the SAM template, you will need to configure Cognito to 
   * `Authorization: Bearer <access token>`
 * Modify the API Gateway URL to hit it from your internal EC2 instance
   * Add the VPCE into your API-Gateway URL
-    * `https://<API-Gateway-ID>-<VPCE-ID>.execute-api.us-west-1.amazonaws.com/dev/EMPLOYEE_ID`
+    * `https://<API-Gateway-ID>-<VPCE-ID>.execute-api.<REGION>.amazonaws.com/dev/EMPLOYEE_ID`
   * Add the `Host` Header with a value of your API-Gateway URL 
-    * `<API-G-ID>.execute-api.us-west-1.amazonaws.com`
+    * `<API-G-ID>.execute-api.<REGION>.amazonaws.com`
   * Change the EMPLOYEE_ID to your Cognito user / SageMaker user profile name and ensure you receive an `Authorized URL`
   *   Change the EMPLOYEE_ID to a user that isn't yours and ensure you receive an access failure
 

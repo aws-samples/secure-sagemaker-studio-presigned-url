@@ -3,9 +3,10 @@ import json
 import os
 
 SAGEMAKER_DOMAIN_ID = os.environ['SAGEMAKER_DOMAIN_ID']
+REGION = os.environ['REGION']
 
 def lambda_handler(event, context):
-    client = boto3.client('sagemaker', region_name="us-west-1")
+    client = boto3.client('sagemaker', region_name=REGION)
 
     try:
         user_profile = 'fakeprofile'
@@ -23,12 +24,11 @@ def lambda_handler(event, context):
         response = {"error": str(e)}
 
     return {
-        'statusCode': 302,
+        'statusCode': 200,
         'headers': {
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-            'Location': response['AuthorizedUrl']
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
         'body': json.dumps(response)
     }

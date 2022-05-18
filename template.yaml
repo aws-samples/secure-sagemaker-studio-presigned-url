@@ -10,6 +10,10 @@ Parameters:
     Type: String
     Default: ''
     Description: SageMaker Domain ID
+  Region:
+    Type: String
+    Default: 'us-east-1'
+    Description: Region SageMaker is deployed to
   StageName:
     Type: String
     Default: dev
@@ -157,6 +161,7 @@ Resources:
       Environment:
         Variables:
           SAGEMAKER_DOMAIN_ID: !Ref SageMakerDomainId
+          REGION: !Ref Region
       Role: !GetAtt PresignedLambdaRole.Arn
       Architectures:
         - x86_64
