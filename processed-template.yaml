@@ -5,13 +5,13 @@ Description: |
 Parameters:
   LambdaCodeSourceS3Bucket:
     Type: String
-    Description: S3 bucket where lambda code zip files are stored.
+    Description: S3 bucket where lambda code zip files are stored. Get the code stored from https://github.com/aws-samples/secure-sagemaker-studio-presigned-url.
   LambdaCodeS3KeyAuth:
     Type: String
-    Description: S3 key for lambda source code. https://github.com/aws-samples/secure-sagemaker-studio-presigned-url/tree/main/auth
+    Description: S3 key for lambda source code https://github.com/aws-samples/secure-sagemaker-studio-presigned-url/tree/main/auth.
   LambdaCodeS3KeyUrl:
     Type: String
-    Description: S3 key for lambda source code. https://github.com/aws-samples/secure-sagemaker-studio-presigned-url/tree/main/presigned-domain-url
+    Description: S3 key for lambda source code https://github.com/aws-samples/secure-sagemaker-studio-presigned-url/tree/main/presigned-domain-url.
   StageName:
     Type: String
     Default: dev
@@ -28,11 +28,11 @@ Parameters:
     Type: String
     Default: ""
     Description: The CIDR for the VPC containing the Lambda Function
-  VpcEndpoints:
+  VPCEndpoints:
     Type: CommaDelimitedList
     Default: ""
     Description: The VPC endpoints to restrict the creation/access of the Presigned URL.
-  LambdaSGs:
+  LambdaSecurityGroups:
     Type: String
     Default: ""
     Description: The Security Group for a Lambda in a VPC
@@ -136,7 +136,7 @@ Resources:
                   arn:${AWS::Partition}:sagemaker:${AWS::Region}:${AWS::AccountId}:user-profile/*/*
                 Condition:
                   StringEquals:
-                    "aws:sourceVpce": !Ref VpcEndpoints
+                    "aws:sourceVpce": !Ref VPCEndpoints
         - PolicyName: vpcpolicy
           PolicyDocument:
             Version: 2012-10-17
@@ -164,7 +164,7 @@ Resources:
       Timeout: 5
       VpcConfig:
         SecurityGroupIds:
-          - !Ref LambdaSGs
+          - !Ref LambdaSecurityGroups
         SubnetIds:
           - !Ref LambdaSubnets
       Environment:
@@ -202,7 +202,7 @@ Resources:
               Effect: Allow
               Condition:
                 StringEquals:
-                  "aws:sourceVpce": !Ref VpcEndpoints
+                  "aws:sourceVpce": !Ref VPCEndpoints
               Principal:
                 AWS: "*"
         securityDefinitions:
